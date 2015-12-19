@@ -1,0 +1,110 @@
+﻿@model IEnumerable<WorkSheet.Models.Entity.Task>
+@using WorkSheet.Helper
+@{
+    Layout = null;
+}
+
+
+<div class="row">
+    <div class="col-md-12">
+        <!-- Begin: life time stats -->
+        <div class="portlet light">
+            <div class="portlet-body">
+                <div class="table-container">
+                    <table class="table table-striped table-bordered table-hover" id="datatable_ajax">
+                        <thead>
+                            <tr role="row" class="heading">                               
+                                <th>
+                                    @Html.DisplayNameFor(model => model.User.Name)
+                                </th>
+                                <th>
+                                    Job
+                                </th>
+                                @*<th>
+                                    @Html.DisplayNameFor(model => model.Point)
+                                </th>*@
+                                @if (@Html.IsAuthorizedForRule(2))
+                                {
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.Quantity)
+                                    </th>
+                                }
+                                @if (@Html.IsAuthorizedForRule(2))
+                                {
+                                    <th>
+                                        200 Check
+                                    </th>
+                                    <th>
+                                        New Items Auto
+                                    </th>
+                                    <th>
+                                        150 Price Check
+                                    </th>
+                                    <th>
+                                        MP Check Change
+                                    </th>
+                                }
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Minute)
+                                </th>
+                                <th>
+                                   Event Date
+                                </th>
+                                
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr role="row" class="filter">                              
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.User.Name)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Description)
+                                    </td>
+                                    @*<td>
+                                        @Html.DisplayFor(modelItem => item.Point)
+                                    </td> *@
+                                    @if (@Html.IsAuthorizedForRule(2))
+                                    {
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Quantity)
+                                        </td>
+                                    }
+                                    @if (@Html.IsAuthorizedForRule(2))
+                                    {
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Check200)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.NewItemsAutomatic)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.PriceCheck150)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.MPCheckChange)
+                                        </td>
+                                    }
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Minute)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.EventDate)
+                                    </td>
+                                    @*<td>
+                                        @Html.DisplayFor(modelItem => item.CreateUser)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.CreateDate)
+                                    </td>*@
+                                </tr>
+                            }
+                            </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

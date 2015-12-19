@@ -1,0 +1,161 @@
+﻿@model IEnumerable<WorkSheet.Models.Entity.Job>
+@using WorkSheet.Helper
+@{
+    ViewBag.Title = "Task Create-List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@*@{ string v_jobNameOther = ViewBag.v_jobNameOther; string v_hour = ViewBag.v_hour; string v_quantity = ViewBag.v_quantity;}*@
+@using (Html.BeginForm())
+{
+@Html.AntiForgeryToken()
+@Html.ValidationSummary(true)
+
+<div class="row">
+    
+    
+        <div class="col-md-12">
+            <!-- Begin: life time stats -->
+            <div class="portlet light">
+                <div class="portlet-body">
+                    <div class="table-container">
+                        <table class="table table-striped table-bordered table-hover" id="datatable_ajax">
+                            <thead>
+                                <tr role="row" class="heading">
+                                    <th >
+                                        Job
+                                    </th>
+                                    @*<th width="15%" data-bind="visible: selectedJob() === '0'">
+                                        data-bind="visible: myValues().length > 0"
+                                        Description
+                                    </th>*@
+                                    @if (@Html.IsAuthorizedForRule(1))
+                                    {
+                                        <th width="10%">
+                                            Quantity    
+                                        </th>
+                                    }
+                                    @if (@Html.IsAuthorizedForRule(2))
+                                    {
+                                        <th width="7%">
+                                            200 Check
+                                        </th>
+                                        <th width="7%">
+                                            New Items Auto
+                                        </th>
+                                        <th width="7%">
+                                            150 Price Check
+                                        </th>
+                                        <th width="7%">
+                                            MP Check Change
+                                        </th>
+                                        }
+                                    <th width="10%">
+                                        Minute
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                     <tr role="row" class="filter">
+                                        <td>
+                                            @Html.HiddenFor(modelItem => item.JobId)
+                                            @*@Html.DisplayFor(modelItem => item.Name)*@
+                                           
+                                            @*@if (!String.IsNullOrEmpty(item.Name))*@
+                                            @if (item.JobTypeId == WorkSheet.Models.Enum.JobType.Normal)
+                                            { 
+                                                @Html.TextBoxFor(modelItem => item.Name, new { maxlength = 150, @class = "form-control form-filter input-sm", @readonly = true })
+                                            }
+                                            else
+                                            {
+                                                @Html.TextBoxFor(modelItem => item.Name, new { maxlength = 150, @class = "form-control form-filter input-sm" })
+                                            }
+                                        </td>
+                                        @if (@Html.IsAuthorizedForRule(1))
+                                        {
+                                            <td>
+                                                @Html.TextBoxFor(modelItem => item.Quantity, new { @class = "form-control form-filter input-sm" }) @*, Name = "number"*@
+                                                @*@Html.ValidationMessage(model => item.Quantity)*@
+                                            </td>
+                                        }
+                                        @if (@Html.IsAuthorizedForRule(2))
+                                        {
+                                            <td>
+                                                @Html.TextBoxFor(modelItem => item.Check200 ,new { @class = "form-control form-filter input-sm" }) @*, Name = "number"*@
+                                            </td>
+                                             <td>
+                                                 @Html.TextBoxFor(modelItem => item.NewItemsAutomatic, new { @class = "form-control form-filter input-sm" }) @*, Name = "number"*@
+                                             </td>
+                                             <td>
+                                                 @Html.TextBoxFor(modelItem => item.PriceCheck150, new { @class = "form-control form-filter input-sm" }) @*, Name = "number"*@
+                                             </td>
+                                             <td>
+                                                 @Html.TextBoxFor(modelItem => item.MPCheckChange, new { @class = "form-control form-filter input-sm" }) @*, Name = "number"*@
+                                             </td>
+                                        }
+                                         <td>
+                                            @Html.TextBoxFor(modelItem => item.Minute, new { maxlength = 150, @class = "form-control form-filter input-sm" }) @*, Name = "number"*@
+                                            @*@Html.ValidationMessage(model => item.Hour)*@
+                                            @*@Html.EditorFor(modelItem => item.JobId, new Dictionary<string, object> { { "data_bind", "visible:false" } })
+                    @Html.TextBoxFor(modelItem => item.Name, new Dictionary<string, object>() { { "readonly", "true" } })*@
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>                            
+                        </table>
+                        
+                        <button class="btn btn-sm yellow table-group-action-submit" type="submit"><i class="fa fa-check"></i>Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+</div>
+
+@*@Html.RenderAction("IndexHistory", "Task")*@
+    @Html.Action("IndexHistory", "Task")
+    
+@*<tr>
+    <td>
+        @Html.TextBox("txtJobNameOther", v_jobNameOther)
+    </td>
+    <td>
+       @Html.TextBox("txtQuantity", v_quantity)
+    </td>
+    <td>
+        @Html.TextBox("txtHour", v_hour)
+    </td>
+
+</tr>*@
+
+
+}
+@section Scripts {
+    <script>
+        $("[name='item.Minute']").keyup(function () {
+            this.value = parseInt(this.value) || 0 ;
+        });
+
+        $("[name='item.Quantity']").keyup(function () {
+            this.value = parseInt(this.value) || 0 ; // this.value.replace(/[^0-9\.]/g, '');
+        });
+
+        $("[name='item.Check200']").keyup(function () {
+            this.value = parseInt(this.value) || 0;
+        });
+
+        $("[name='item.NewItemsAutomatic']").keyup(function () {
+            this.value = parseInt(this.value) || 0;
+        });
+
+        $("[name='item.PriceCheck150']").keyup(function () {
+            this.value = parseInt(this.value) || 0;
+        });
+
+        $("[name='item.MPCheckChange']").keyup(function () {
+            this.value = parseInt(this.value) || 0;
+        });
+    </script>
+}
